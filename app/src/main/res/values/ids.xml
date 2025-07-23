@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="progressbar" type="id"/>
+    <item name="textview_option1" type="id"/>
+    <item name="textview_option4" type="id"/>
+    <item name="textview_option3" type="id"/>
+    <item name="textview_option2" type="id"/>
+    <item name="check_button" type="id"/>
+</resources>
