@@ -140,8 +140,9 @@ override fun onClick(v: View?) {
 }
 private fun checkAnswer() {
     answered = true
-    score++
+
     if (selectedOptionPosition == currentQuestion.correctAnswer) {
+        score++
         when (selectedOptionPosition) {
             1 -> { option1.background = ContextCompat.getDrawable(this, R.drawable.correct_option_bg) }
             2 -> { option2.background = ContextCompat.getDrawable(this, R.drawable.correct_option_bg) }
