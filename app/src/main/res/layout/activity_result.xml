@@ -16,10 +16,11 @@
             android:layout_height="wrap_content"
             android:text="@string/result_title"
             android:textSize="35sp"
-            android:textColor="#8BC34A"
+            android:textColor="#9C27B0"
             android:layout_marginTop="14dp"
             android:textStyle="bold"
-            android:layout_marginBottom="20dp" android:layout_gravity="center_horizontal"/>
+            android:layout_marginBottom="20dp" android:layout_gravity="center_horizontal"
+            android:gravity="center"/>
     <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -81,20 +81,41 @@ private fun showNextQuestion() {
     option3.text = currentQuestion.optionThree
     option4.text = currentQuestion.optionFour
 
-    if (questionCounter == questionList.size) {
-        checkButton.text = "FINISH"
-        Intent(this@QuestionActivity, ResultActivity::class.java).also {
-            it.putExtra(Constants.USER_NAME, username)
-            it.putExtra(Constants.SCORE,score)
-            it.putExtra(Constants.TOTAL_QUESTIONS,questionList.size)
-            startActivity(it)
-            finish()
+    // Correct: Just update the button text here,
+    // DO NOT navigate to ResultActivity
+    checkButton.text = if (questionCounter == questionList.size) "FINISH" else "CHECK"
+}
+
+override fun onClick(v: View?) {
+    when (v?.id) {
+        R.id.textview_option1 -> selectedOptionView(option1, 1)
+        R.id.textview_option2 -> selectedOptionView(option2, 2)
+        R.id.textview_option3 -> selectedOptionView(option3, 3)
+        R.id.textview_option4 -> selectedOptionView(option4, 4)
+        R.id.check_button -> {
+            if (!answered) {
+                checkAnswer()
+                answered = true
+            } else {
+                if (questionCounter < questionList.size) {
+                    questionCounter++
+                    showNextQuestion()
+                    answered = false
+                    selectedOptionPosition = 0
+                } else {
+                    // Only go to result when user has checked the last question!
+                    val intent = Intent(this@QuestionActivity, ResultActivity::class.java)
+                    intent.putExtra(Constants.USER_NAME, username)
+                    intent.putExtra(Constants.SCORE, score)
+                    intent.putExtra(Constants.TOTAL_QUESTIONS, questionList.size)
+                    startActivity(intent)
+                    finish()
+                }
+            }
         }
-    } else {
-        checkButton.text = "CHECK"
     }
 }
-    private fun resetOptions(){
+private fun resetOptions(){
         val options = listOf<TextView>(option1, option2, option3, option4)
         for(option in options){
             option.setTextColor(Color.parseColor("#7A8089"))
@@ -113,31 +134,6 @@ private fun showNextQuestion() {
 
 
     }
-override fun onClick(v: View?) {
-    when (v?.id) {
-        R.id.textview_option1 -> selectedOptionView(option1,1)
-        R.id.textview_option2 -> selectedOptionView(option2,2)
-        R.id.textview_option3 -> selectedOptionView(option3,3)
-        R.id.textview_option4 -> selectedOptionView(option4,4)
-        R.id.check_button -> {
-            if (!answered) {
-                // 1. Check answer
-                checkAnswer()
-                answered = true
-            } else {
-                // 2. Go to next question or finish
-                questionCounter++
-                if (questionCounter <= questionList.size) {
-                    showNextQuestion()
-                    answered = false
-                    selectedOptionPosition = 0
-                } else {
-                    // Finished all questions - handle result or finish activity
-                }
-            }
-        }
-    }
-}
 private fun checkAnswer() {
     answered = true
 
